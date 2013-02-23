@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>The Hypermedia API</title>
+        <meta name="description" content="The hypermedia API">
+        <meta name="author" content="Ben Longden">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/default.css" id="theme">
+        <link rel="stylesheet" href="css/style.css">
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>The Hypermedia API</h1>
+                    <p>
+                        <small><a href="http://nocarrier.co.uk">Ben Longden</a> / <a href="http://twitter.com/blongden">@blongden</a></small>
+                    </p>
+                </section>
+
+                    <section>
+                        <h1>Who are you?</h1>
+                        <h3 class="fragment roll-in">Software Engineer &amp; Manager</h3>
+                        <p class="fragment roll-in">Inviqa, Session Digital, Sensio Labs UK</p>
+                        <aside class='notes'>Blog, talks (REST, Silex), community</aside>
+                    </section>
+
+                    <section>
+                        <img src='images/scotland.jpg'>
+                    </section>
+
+                    <section>
+                        <table>
+                            <tr><td>Twitter:</td><td>blongden</td></tr>
+                            <tr><td>GitHub:</td><td>blongden</td></tr>
+                            <tr><td>Email:</td><td>ben@nocarrier.co.uk</td></tr>
+                        </table>
+                    </section>
+
+                    <section>
+                        <h1>Architectural Styles</h1>
+                        <aside class="notes">Lot's of apis use the web to tunnel data</aside>
+                    </section>
+
+                    <section>
+                        <h1>RPC</h1>
+                        <p>http://.../create_account.php?email_addr=user@example.com&amp;
+                        passwd_hash=2ab548fae3162ccfa1a2d41a55557a92&amp;
+                        user_name=CrunchAll</p>
+                        <aside class="notes">Unsafe GET requests. Works against edge side and browser cache.</aside>
+                    </section>
+
+                    <section>
+                        <h1>Richardson Maturity Level 0</h1>
+                    </section>
+
+                    <section>
+                        <h1>The swamp of POX</h1>
+                        <h2>Plain old XML</h1>
+                        <h3 class="fragment roll-in">(or JSON)</h3>
+                        <aside class="notes">No semantic meaning</aside>
+                    </section>
+
+                    <section>
+                        <pre><code>&lt;user&gt;
+    &lt;emailaddr&gt;user@example.com&lt;/emailaddr&gt;
+    &lt;username&gt;CrunchAll&lt;/username&gt;
+&lt;/user&gt;</code></pre>
+                        <aside class="notes">Domain specific. Not generic.</aside>
+                    </section>
+
+                    <section>
+                        <h1>WS-*</h1>
+                        <h2>SOAP</h2>
+                        <aside class="notes">WSDL, POST only, reinvents what already exists in HTTP. Can just work, auto generate clients. Complex.</aside>
+                    </section>
+
+                    <section>
+                        <h1>Richardson Maturity Level 1</h1>
+                    </section>
+
+                    <section>
+                        <h1>Identification of Resources</h1>
+                        <h2>Pretty URLs</h2>
+                        <aside class="notes">What people think of when you say 'REST'</aside>
+                    </section>
+
+                    <section>
+                        <h1>No Verbs</h1>
+                        <h2>Find the nouns</h2>
+                        <aside class="notes">Nouns == Resources</aside>
+                    </section>
+
+                    <section>
+                        <p><strong class='hilight'>Users</strong> can create <strong class='hilight'>messages</strong> that are visible to other users who follow them.</p>
+                    </section>
+
+                    <section>
+                        <h1>Craft urls for your resources</h1>
+                        <small>http://.../users/{name}</small>
+                        <br />
+                        <small>http://.../messages/{id}</small>
+                    </section>
+
+                    <section>
+                        <h1>Subsets of data</h1>
+                        <small>http://.../users/blongden/messages</small>
+                        <aside class="notes">Rather than arbitrary queries like ?filterby=blongden</aside>
+                    </section>
+                    <section>
+                        <h1>HTTP as a tunnel</h1>
+                        <aside class="notes">Like POX. But HTTP is a protocol. Clue is in the P...</aside>
+                    </section>
+
+                    <section>
+                        <h1>Methods</h1>
+                        <h1>Metadata</h1>
+                        <h1>Payload</h1>
+                        <aside class="notes">The three things you can express over HTTP</aside>
+                    </section>
+                    <section>
+                        <h1>HTTP is successful</h1>
+                        <h2>Authentication, Cache, Content Negotiation</h2>
+                    </section>
+                    <section>
+                        <h1>Richardson Maturity Level 2</h1>
+                        <h2>Use the verbs that HTTP provides</h2>
+                        <h3>GET POST PUT DELETE</h3>
+                        <h4>OPTIONS TRACE HEAD CONNECT PATCH</h4>
+                    </section>
+                    <section>
+                        <h1>Safe actions</h1>
+                        <h2>HEAD &amp; GET</h2>
+                        <aside class="notes">No side effects against the resource at the url, remeber ?delete</aside>
+                    </section>
+                    <section>
+                        <h1>Idempotent actions</h1>
+                        <h2>HEAD, GET, PUT, DELETE</h2>
+                        <h3>OPTIONS, TRACE</h3>
+                        <aside class="notes">Results of &gt; 1 identical request is the same as for 1</aside>
+                    </section>
+                    <section>
+                        <h1>Identify States</h1>
+                        <h4>List users, list a single user</h4>
+                        <h4>List messages, list a single message</h4>
+                        <h4>Create/update/delete a user</h4>
+                        <h4>Follow/unfollow a user</h4>
+                        <aside class="notes">We could add in search too</aside>
+                    </section>
+                    <section>
+                        <pre><code>GET /users/blongden/messages HTTP/1.1
+Host: example.com</code></pre>
+                        <aside class="notes"></aside>
+                    </section>
+                    <section>
+                        <pre><code>POST /users/blongden/messages HTTP/1.1
+Host: example.com</code></pre>
+                        <aside class="notes"></aside>
+                    </section>
+                    <section>
+                        <pre><code>PUT /users/blongden/messages/1 HTTP/1.1
+Host: example.com</code></pre>
+                        <aside class="notes"></aside>
+                    </section>
+                    <section>
+                        <pre><code>DELETE /users/blongden/messages/1 HTTP/1.1
+Host: example.com</code></pre>
+                        <aside class="notes"></aside>
+                    </section>
+                    <section>
+                        <h1>Richardson Maturity Model Level 3</h1>
+                        <h2>Hypermedia</h2>
+                    </section>
+                    <section>
+                        <h1>Hypermedia</h1>
+                        <p>Hypermedia is used as a logical extension of the term hypertext in which graphics, audio, video, plain text and hyperlinks intertwine to create a generally non-linear medium of information.</p>
+                    </section>
+                    <section>
+                        <h1>Hypermedia Affordances</h1>
+                        <aside class="notes">All hypermedia types will exhibit at least one</aside>
+                    </section>
+                    <section>
+                        <h1>[LE] Embedded Links</h1>
+                        <pre><code>&lt;img src='http://example.com/logo' /&gt;</code></pre>
+                    </section>
+                    <section>
+                        <h1>[LO] Outbound Links</h1>
+                        <pre><code>&lt;a href='http://example.com/search' title='view search page'&gt;Search&lt;/a&gt;</code></pre>
+                    </section>
+                    <section>
+                        <h1>[LT] Templated Queries</h1>
+                        <pre><code>&lt;form method='get'&gt;...&lt;/form&gt;</code></pre>
+                    </section>
+                    <section>
+                        <h1>[LN] Non-Idempotent updates</h1>
+                        <pre><code>&lt;form method='post'&gt;...&lt;/form&gt;</code></pre>
+                    </section>
+                    <section>
+                        <h1>[LI] Idempotent updates</h1>
+                        <h2>Support for PUT and DELETE<h2>
+                    </section>
+                    <section>
+                        <h1>Registered Media Types</h1>
+                    </section>
+                    <section>
+                        <h1>HAL</h1>
+                        <h2>Hypertext Application Language</h2>
+                        <aside class="notes">Very simple markup for XML and JSON for representations of resources</aside>
+                    </section>
+                    <section>
+                        <pre><code>"_links": {
+    "next":   { "href": "/orders?page=2" },
+    "self":   { "href": "/orders" }
+},
+"_embedded": { "order": [
+    "_links": {
+        "customer": {
+            "href": "/customer/bob", 
+            "title": "Bob Jones &lt;bob@jones.com&gt;"
+        }, 
+        "self": { "href": "/orders/123" }
+    },
+    "currency": "USD", "total": 30
+]}</code></pre>
+                    </section>
+                    <section>
+                        <pre><code>&lt;?xml version="1.0"?&gt;
+&lt;resource href="/orders"&gt;
+  &lt;link rel="next" href="/orders?page=2"/&gt;
+  &lt;link rel="search" href="/orders?id={order_id}"/&gt;
+  &lt;resource rel="order" href="/orders/123"&gt;
+    &lt;link rel="customer" href="/customer/bob" title="Bob Jones &lt;bob@jones.com&gt;"/&gt;
+    &lt;total&gt;30&lt;/total&gt;
+    &lt;currency&gt;USD&lt;/currency&gt;
+  &lt;/resource&gt;
+&lt;/resource&gt;</code></pre>
+                    </section>
+                    <section>
+                        <pre><code>&lt;?php
+$hal = new \Nocarrier\Hal('/orders');
+$hal->addLink('next', '/orders?page=2');
+$hal->addLink('search', '/orders?id={order_id}');
+
+$resource = new \Nocarrier\Hal(
+    '/orders/123',
+    array(
+        'total' => 30.00,
+        'currency' => 'GBP',
+    )
+);
+
+$resource->addLink('customer', '/customer/bob', 'Bob Jones <bob@jones.com>');
+$hal->addResource('order', $resource);
+echo $hal->asXml();
+echo $hal->asJson();</code></pre>
+                    </section>
+                    <section>
+                        <h1>Link Relations</h1>
+                    </section>
+                    <section>
+                        <h1>Short Syntax</h1>
+                        <h2>"stylesheet", "profile"</h1>
+                    </section>
+                    <section>
+                        <h1>Microformats</h1>
+                        <a href="http://microformats.org/wiki/existing-rel-values">registered link relations</a>
+                    </section>
+                    <section>
+                        <h1>IANA</h1>
+                        <a href="ihttp://www.iana.org/assignments/link-relations/link-relations.xml">registered link relations</a>
+                    </section>
+                    <section>
+                        <h1>Custom Link Relations</h1>
+                        <p>http://.../rels/message</p>
+                    </section>
+                    <section>
+                        <h1>Designing a Hypermedia Type</h1>
+                    </section>
+                    <section>
+                        <h1>XML or JSON?</h1>
+                        <h2>HTML? YAML?</h2>
+                    </section>
+                    <section>
+                        <h1>JSON</h1>
+                        <h2>Ubiquitous and easy to parse</h2>
+                        <h3>Rigid structure</h3>
+                    </section>
+                    <section>
+                        <h1>XML</h1>
+                        <h2>Ubiquitous but harder to parse</h2>
+                        <h3>Evolvable</h3>
+                    </section>
+                    <section>
+                        <pre><code>{
+    "name": "Ben",
+    "phone": "07777000000"
+}</code></pre>
+                    </section>
+                    <section>
+                        <pre><code>{
+    "name": "Ben",
+    "phone": [ "07777000000", "07777000001" ]
+}</code></pre>
+                    </section>
+                    <section>
+                        <pre><code>&lt;?xml version="1.0"?&gt;
+&lt;contact&gt;
+    &lt;name&gt;Ben&lt;/name&gt;
+    &lt;phone&gt;07777000000&lt;/phone&gt;
+&lt;/contact&gt;</code></pre>
+                    </section>
+                    <section>
+                        <pre><code>&lt;?xml version="1.0"?&gt;
+&lt;contact&gt;
+    &lt;name&gt;Ben&lt;/name&gt;
+    &lt;phone&gt;07777000000&lt;/phone&gt;
+    &lt;phone&gt;07777000001&lt;/phone&gt;
+&lt;/contact&gt;</code></pre>
+                    </section>
+                    <section>
+                        <h1>Consider H-Factors</h1>
+                        <h2>Do you need to extend an existing format?</h2>
+                    </section>
+                    <section>
+                        <h1>Why use a registered type?</h1>
+                    </section>
+                    <section>
+                        <h1><a href="https://api-sandbox.foxycart.com/hal-browser/hal_browser.html">Existing tools</a></h1>
+                    </section>
+                    <section>
+                        <h1>Interoperability</h1>
+                    </section>
+                <section>
+                    <h1>The 'Chatty API' problem</h1>
+                </section>
+                <section>
+                    <h1>Zoom</h1>
+                </section>
+                <section>
+                    <p>http://.../users/blongden?zoom=messages</p>
+                    <pre><code>{
+    "_links": { 
+      "self": { href: "http://.../users/blongden" },
+      "messages": { href: "http://.../users/blongden/messages" }
+    }
+    "_embedded": {
+      "messages": { ... }
+    }
+}</code></pre>
+                </section>
+                <section>
+                    <h1>Common interface</h1>
+                </section>
+                <section>
+                    <h1>Thank you.</h1>
+                    <a href = "http://joind.in/8048">http://joind.in/8048</a>
+                </section>
+            </div>
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: '/socket.io/socket.io.js', async: true },
+                    { src: 'plugin/notes-server/client.js', async: true }
+                ]
+            });
+        </script>
+
+    </body>
+</html>
