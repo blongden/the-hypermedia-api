@@ -85,7 +85,7 @@
     &lt;emailaddr&gt;user@example.com&lt;/emailaddr&gt;
     &lt;username&gt;CrunchAll&lt;/username&gt;
 &lt;/user&gt;</code></pre>
-                        <aside class="notes">Domain specific. Not generic.</aside>
+                        <aside class="notes">Domain specific. Clients can only speak to YOUR api.</aside>
                     </section>
 
                     <section>
@@ -204,7 +204,9 @@ Host: example.com</code></pre>
                     </section>
                     <section>
                         <h1>[LO] Outbound Links</h1>
-                        <pre><code>&lt;a href='http://example.com/search' title='view search page'&gt;Search&lt;/a&gt;</code></pre>
+                        <pre><code>&lt;a href='http://example.com/search' title='view search page'&gt;
+    Search
+&lt;/a&gt;</code></pre>
                     </section>
                     <section>
                         <h1>[LT] Templated Queries</h1>
@@ -257,21 +259,21 @@ Host: example.com</code></pre>
                     <section>
                         <pre><code>&lt;?php
 $hal = new \Nocarrier\Hal('/orders');
-$hal->addLink('next', '/orders?page=2');
-$hal->addLink('search', '/orders?id={order_id}');
+$hal-&gt;addLink('next', '/orders?page=2');
+$hal-&gt;addLink('search', '/orders?id={order_id}');
 
 $resource = new \Nocarrier\Hal(
     '/orders/123',
     array(
-        'total' => 30.00,
-        'currency' => 'GBP',
+        'total' =&gt; 30.00,
+        'currency' =&gt; 'GBP',
     )
 );
 
-$resource->addLink('customer', '/customer/bob', 'Bob Jones <bob@jones.com>');
-$hal->addResource('order', $resource);
-echo $hal->asXml();
-echo $hal->asJson();</code></pre>
+$resource-&gt;addLink('customer', '/customer/bob', 'Bob Jones &lt;bob@jones.com&gt;');
+$hal-&gt;addResource('order', $resource);
+echo $hal-&gt;asXml();
+echo $hal-&gt;asJson();</code></pre>
                     </section>
                     <section>
                         <h1>Link Relations</h1>
@@ -282,11 +284,11 @@ echo $hal->asJson();</code></pre>
                     </section>
                     <section>
                         <h1>Microformats</h1>
-                        <a href="http://microformats.org/wiki/existing-rel-values">registered link relations</a>
+                        <a href="http://microformats.org/wiki/existing-rel-values" target="_blank">registered link relations</a>
                     </section>
                     <section>
                         <h1>IANA</h1>
-                        <a href="ihttp://www.iana.org/assignments/link-relations/link-relations.xml">registered link relations</a>
+                        <a href="http://www.iana.org/assignments/link-relations/link-relations.xml" target="_blank">registered link relations</a>
                     </section>
                     <section>
                         <h1>Custom Link Relations</h1>
@@ -344,7 +346,7 @@ echo $hal->asJson();</code></pre>
                         <h1>Why use a registered type?</h1>
                     </section>
                     <section>
-                        <h1><a href="https://api-sandbox.foxycart.com/hal-browser/hal_browser.html">Existing tools</a></h1>
+                        <h1><a href="https://api-sandbox.foxycart.com/hal-browser/hal_browser.html" target="_blank">Existing tools</a></h1>
                     </section>
                     <section>
                         <h1>Interoperability</h1>
@@ -354,6 +356,7 @@ echo $hal->asJson();</code></pre>
                 </section>
                 <section>
                     <h1>Zoom</h1>
+                    <h2>The hypertext cache pattern</h2>
                 </section>
                 <section>
                     <p>http://.../users/blongden?zoom=messages</p>
